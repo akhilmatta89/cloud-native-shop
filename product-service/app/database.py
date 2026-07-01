@@ -3,13 +3,16 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+class Settings:
+    DATABASE_URL = os.getenv(
+        "DATABASE_URL",
+        "postgresql+psycopg://shop_user:shop_password@localhost:5432/shop"
+    )
 
-if DATABASE_URL is None:
-    raise RuntimeError("DATABASE_URL environment variable is missing")
+settings = Settings()
 
 engine = create_engine(
-    DATABASE_URL,
+    settings.DATABASE_URL,
     pool_size=10,
     max_overflow=20,
     pool_pre_ping=True
