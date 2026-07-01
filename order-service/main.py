@@ -1,9 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import requests
+import os
 
 app = FastAPI()
-PRODUCT_SERVICE_URL = "http://localhost:8001"
+PRODUCT_SERVICE_URL = os.getenv(
+    "PRODUCT_SERVICE_URL",
+    "http://localhost:8001"
+)
+
+print(f"Using Product Service: {PRODUCT_SERVICE_URL}")
 
 class OrderRequest(BaseModel):
     product_id: int
