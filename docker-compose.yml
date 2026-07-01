@@ -10,6 +10,8 @@ services:
     container_name: product-service
     ports:
       - "8001:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg://shop_user:shop_password@postgres:5432/shop
 
   order-service:
     build: ./order-service
