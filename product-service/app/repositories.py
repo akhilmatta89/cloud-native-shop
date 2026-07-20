@@ -1,3 +1,5 @@
+"""CNS_2.2 -> Create a repository layer for the Product Service to handle database operations."""
+
 from sqlalchemy.orm import Session
 from schemas import ProductCreate, ProductUpdate
 from models import Product
