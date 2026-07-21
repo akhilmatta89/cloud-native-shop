@@ -1,12 +1,9 @@
-""" Task:CNS_2.3
-Create service module for managing products. """
-
-from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from app.models import Product
 from app.repositories import ProductRepository
 from app.schemas import ProductCreate, ProductUpdate
+from app.exceptions import ProductNotFoundException
 
 
 class ProductService:
@@ -20,10 +17,7 @@ class ProductService:
         product = ProductRepository.get_product_by_id(db, product_id)
 
         if product is None:
-            raise HTTPException(
-                status_code=404,
-                detail="Product not found"
-            )
+            raise ProductNotFoundException(product_id)
 
         return product
 
@@ -41,10 +35,7 @@ class ProductService:
         product = ProductRepository.get_product_by_id(db, product_id)
 
         if product is None:
-            raise HTTPException(
-                status_code=404,
-                detail="Product not found"
-            )
+            raise ProductNotFoundException(product_id)
 
         return ProductRepository.update_product(
             db,
@@ -61,10 +52,7 @@ class ProductService:
         product = ProductRepository.get_product_by_id(db, product_id)
 
         if product is None:
-            raise HTTPException(
-                status_code=404,
-                detail="Product not found"
-            )
+            raise ProductNotFoundException(product_id)
 
         return ProductRepository.delete_product(
             db,
