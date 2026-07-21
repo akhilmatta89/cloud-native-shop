@@ -5,3 +5,7 @@ sqlalchemy
 psycopg[binary]
 
 alembic
+
+pytest
+pytest-cov
+httpx
