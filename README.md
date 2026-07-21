@@ -12,3 +12,4 @@ Task : 3.4 -> Add Unit Testing for the Product Service \
 Task: 4.1 -> Add Order Model \
 Task: 4.2 -> Add Order Schema \
 Task: 4.3 -> Add Order Repository \
+Task: 4.4 -> Add Order Service \
