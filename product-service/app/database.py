@@ -3,13 +3,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 
-class Settings:
-    DATABASE_URL = os.getenv(
-        "DATABASE_URL",
-        "postgresql+psycopg://shop_user:shop_password@localhost:5432/shop"
-    )
+from app.config import settings
 
-settings = Settings()
 
 engine = create_engine(
     settings.DATABASE_URL,

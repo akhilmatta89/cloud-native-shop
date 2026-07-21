@@ -19,6 +19,7 @@ class ProductRepository:
         db.commit()
         db.refresh(db_product)
         logger.debug("Product added to the database: %s", db_product)
+
         return db_product
 
     @staticmethod
