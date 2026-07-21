@@ -24,11 +24,9 @@ class OrderService:
         total_price = OrderService._calculate_total_price(product_info, order_request.quantity)
 
         # Step 4: Reduce inventory in Product Service
-        new_stock = product_info["stock_quantity"] - order_request.quantity
-
         ProductClient.reduce_inventory(
             order_request.product_id,
-            new_stock,
+            product_info["stock_quantity"] - order_request.quantity,
         )
 
         # Step 5: Create ORM object
@@ -64,3 +62,44 @@ class OrderService:
         price = Decimal(str(product_info["price"]))
 
         return price * quantity
+
+    @staticmethod
+    def get_order_by_id(db: Session, order_id: int) -> Order:
+        """
+        Retrieve an order by its ID.
+        """
+        order = OrderRepository.get_order_by_id(db, order_id)
+        if not order:
+            raise ValueError("Order not found.")
+        return order
+
+    @staticmethod
+    def get_all_orders(db: Session) -> list[Order]:
+        """
+        Retrieve all orders.
+        """
+        return OrderRepository.get_all_orders(db)
+
+    @staticmethod
+    def update_order_status(db: Session, order_id: int, status: OrderStatus) -> Order:
+        """
+        Update the status of an existing order.
+        """
+        order = OrderRepository.get_order_by_id(db, order_id)
+
+        if not order:
+            raise ValueError("Order not found.")
+
+        return OrderRepository.update_order_status(db, order_id, status)
+
+    @staticmethod
+    def delete_order(db: Session, order_id: int) -> Order:
+        """
+        Delete an order by its ID.
+        """
+        order = OrderRepository.get_order_by_id(db, order_id)
+
+        if not order:
+            raise ValueError("Order not found.")
+
+        return OrderRepository.delete_order(db, order_id)
