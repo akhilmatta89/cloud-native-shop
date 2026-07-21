@@ -3,7 +3,7 @@
 from sqlalchemy.orm import Session
 from app.schemas import ProductCreate, ProductUpdate
 from app.models import Product
-
+from app.logger import logger
 
 class ProductRepository:
     @staticmethod
@@ -14,9 +14,11 @@ class ProductRepository:
             price=product.price,
             stock_quantity=product.stock_quantity
         )
+        logger.debug("Adding product to the database: %s", db_product)
         db.add(db_product)
         db.commit()
         db.refresh(db_product)
+        logger.debug("Product added to the database: %s", db_product)
         return db_product
 
     @staticmethod
