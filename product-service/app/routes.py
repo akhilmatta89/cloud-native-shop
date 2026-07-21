@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas import ProductCreate, ProductUpdate, ProductResponse
 from app.services import ProductService
+from app.logger import logger
 
 router = APIRouter()
 
